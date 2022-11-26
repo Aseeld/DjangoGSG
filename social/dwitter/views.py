@@ -48,26 +48,3 @@ def profile(request, pk):
         current_user_profile.save()
     return render(request, "dwitter/profile.html", {"profile": profile})
 
-def blog_detail(request, pk):
-    post = Post.objects.get(pk=pk)
-
-    
-    form = D()
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = Comment(
-            author=form.cleaned_data["author"],
-            body=form.cleaned_data["body"],
-            post=post
-            )
-        comment.save()
-
-
-    comments = Comment.objects.filter(post=post)
-    context = {
-        "post": post,
-        "comments": comments,
-        "form": form,
-        }
-    return render(request, "blog_detail.html", context)
